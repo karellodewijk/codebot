@@ -1,0 +1,55 @@
+Cbot 
+****
+
+Cbot is short for codebot, an interactive programming enviroment in irc. 
+ 
+It supports 5 languages ruby, python, java, c++ and c.
+ 
+It can work in different modes for each of these languages. 
+    - In snippet mode, a number of useful files are allready imported and you are dropped right into the main function.
+    - In program mode you have write a full program yourself.
+    - Ruby and python also support interactive mode, which gives quick feedback on every command, like the irb and python console respectively
+ 
+Quickstart
+----------
+
+You start by saying cbot new language mode, to get into your programming enviroment. From this point
+cbot will assume everything you say until you pause or stop cbot is code. 
+ 
+In interactive mode your code will yield immediate results but in the other modes, after you arere satisfied
+with your code you need to say cbot r, to actually run it.
+ 
+Other useful commands are
+    cbot p                  lists your progress
+    cbot delete line        deletes a line
+    cbot edit line          edit a line
+    cbot insert index line  insert a line at the given index
+    cbot pause              pause entering code
+    cbot continue           pause entering code
+    cbot stop               stop entering code, all progress wil be lost
+ 
+
+list of commands
+----------------
+
+All commands must be prefixed by cbot. parameters between () are optional. | signifies or. 
+ 
+new|n (ruby|python|java|c|c++) (i|s|p)      Start program enviroment in interactive|snippet|program mode
+stop|s                                      Stop program enviroment, progress will be deleted
+run|r                                       Run program or snippet
+delete|d|undo|u (nothing|line|start stop)   Delete last line|given line|range
+add|a user                                  Add another user to your programming enviroment
+pause|wait|w                                Stop adding lines but do not stop programming enviroment
+continue|cont|c                             Continue when paused
+print|progress|p (nothing|line|start stop)  Print all|line|range
+edit|e|change index newline                 Changes line index with newline
+insert|i index newline                      Inserts the newline at the specified position
+
+
+Notes
+-----
+
+- Java is always compiles in the file Test.java, so your main class must also be called Test
+- In ruby and python snippet and program mode are the same.
+- In snippet mode the line numbers in the error messages will not always be accurate
+
