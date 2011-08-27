@@ -70,8 +70,9 @@ class PythonEnviroment < Enviroment
             result = @console.write(line)
             errors = @console.errors
 
+            #pp result, errors
             output = result.split("\n").reject{|x| x.include?("$>")} #ignore line with prompt
-            return output, error
+            return output, errors
         end
     end
 

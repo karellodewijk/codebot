@@ -35,6 +35,10 @@ class CodeBot < IrcClient
             end
         }
     end
+    
+    def user_left(user) 
+        @active_user_enviroments.delete(user)
+    end
 
     def parse_new(user, splitRequest)
         if splitRequest.size >= 1
@@ -104,7 +108,7 @@ list of commands:
 All commands must be prefixed by cbot. parameters between () are optional. | signifies or. 
  
 new|n (ruby|python|java|c|c++) (i|s|p)      Start program enviroment in interactive|snippet|program mode
-stop|s                                      Stop program enviroment, progress will be deleted
+stop|s                                      Stop program enviroment, progress will be lost
 run|r                                       Run program or snippet
 delete|d|undo|u (nothing|line|start stop)   Delete last line|given line|range
 add|a user                                  Add another user to your programming enviroment
