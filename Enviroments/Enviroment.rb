@@ -121,11 +121,12 @@ class Enviroment
     end
 
   protected
-    def initialize(task_list)
+    def initialize(task_list, command_prefix)
         @lines = []
         @pause = false
         @task_list = task_list
         @dir = Dir.tmpdir+"/"+rand.to_s+"/"
+        @command_prefix = command_prefix
         Dir.mkdir(@dir)
     end
 

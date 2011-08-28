@@ -7,8 +7,8 @@ require 'tmpdir' #loads Dir.tmpdir
 #the ruby programming enviroment
 
 class PythonEnviroment < Enviroment
-    def initialize(task_list)
-        super(task_list)
+    def initialize(task_list, command_prefix)
+        super(task_list, command_prefix)
     end
 
     def version
@@ -24,7 +24,7 @@ class PythonEnviroment < Enviroment
         f.close()
 
         #start a new task and add it to the task list
-        task = Task.new("python #{path}", user)
+        task = Task.new("#{@command_prefix} python #{path}", user)
         @task_list.push(task)
         @d = Thread.new {
             task.start
@@ -79,7 +79,7 @@ class PythonEnviroment < Enviroment
     def mode_changed(mode)
         if @mode == CodeBot::INTERACTIVE
             puts "opening an interactive python mode"
-            @console = ConsoleApplication.new("python ./Enviroments/console.py", "$>")
+            @console = ConsoleApplication.new("python ./Enviroments/console.py", "$>", @command_prefix)
             puts @console.start
         end
     end

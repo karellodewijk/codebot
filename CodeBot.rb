@@ -15,10 +15,11 @@ class CodeBot < IrcClient
     #map of enviroments {user -> Enviroment}
     @active_user_enviroments = {}
 
-    def initialize(server, channel, port)
+    def initialize(server, channel, port, command_prefix)
         super(server, port, channel, "cbot", "A bot that can quickly compile/run code snippets in various programming languages")
         @active_user_enviroments = {}
         @tasks = []
+        @command_prefix = command_prefix
     end
 
   private
@@ -70,15 +71,15 @@ class CodeBot < IrcClient
 
             case language
                 when RUBY        
-                    @active_user_enviroments[user] = RubyEnviroment.new(@tasks)
+                    @active_user_enviroments[user] = RubyEnviroment.new(@tasks, @command_prefix)
                 when PYTHON
-                    @active_user_enviroments[user] = PythonEnviroment.new(@tasks)
+                    @active_user_enviroments[user] = PythonEnviroment.new(@tasks, @command_prefix)
                 when JAVA
-                    @active_user_enviroments[user] = JavaEnviroment.new(@tasks)
+                    @active_user_enviroments[user] = JavaEnviroment.new(@tasks, @command_prefix)
                 when C
-                    @active_user_enviroments[user] = CEnviroment.new(@tasks)
+                    @active_user_enviroments[user] = CEnviroment.new(@tasks, @command_prefix)
                 when CPP
-                    @active_user_enviroments[user] = CPPEnviroment.new(@tasks)
+                    @active_user_enviroments[user] = CPPEnviroment.new(@tasks, @command_prefix)
             else
                 send("#{language} language currently not supported")
                 return                

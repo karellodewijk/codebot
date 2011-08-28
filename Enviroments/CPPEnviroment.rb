@@ -34,8 +34,8 @@ int main() \{
 \}
 }
 
-    def initialize(task_list)
-        super(task_list)
+    def initialize(task_list, command_prefix)
+        super(task_list, command_prefix)
         rand(9999999999) # => 22
         @dir = Dir.tmpdir+"/"+rand.to_s+"/"
         Dir.mkdir(@dir)
@@ -68,7 +68,7 @@ int main() \{
         f.close()
 
         #start a new task and add it to the task list
-        task = Task.new("cd #{@dir} && g++ #{path} && ./a.out", user)
+        task = Task.new("cd #{@dir} && #{@command_prefix} g++ #{path} && #{@command_prefix} ./a.out", user)
         @task_list.push(task)
         @d = Thread.new {
             task.start

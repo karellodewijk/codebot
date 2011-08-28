@@ -27,8 +27,8 @@ class Test \{
 \}
 }
 
-    def initialize(task_list)
-        super(task_list)
+    def initialize(task_list, command_prefix)
+        super(task_list, command_prefix)
         rand(9999999999) # => 22
         @dir = Dir.tmpdir+"/"+rand.to_s+"/"
         Dir.mkdir(@dir)
@@ -61,7 +61,7 @@ class Test \{
         f.close()
 
         #start a new task and add it to the task list
-        task = Task.new("cd #{@dir} && javac #{path} && java Test ", user)
+        task = Task.new("cd #{@dir} && #{@command_prefix} javac #{path} && #{@command_prefix} java Test ", user)
         @task_list.push(task)
         @d = Thread.new {
             task.start

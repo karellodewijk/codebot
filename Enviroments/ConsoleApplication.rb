@@ -5,12 +5,15 @@ class ConsoleApplication
     MAX_CHARS = 100
     TIMEOUT = 1
 
-    def initialize(name, prompt)
+    def initialize(name, prompt, command_prefix)
         @name = name
         @prompt = prompt
+        @command_prefix = command_prefix
     end
 
     def start
+        puts "running"
+        puts @name
         @pid, @stdin, @stdout, @stderr = Open4.popen4(@name)
         result = read_until_prompt(TIMEOUT)
         return result
@@ -43,13 +46,19 @@ class ConsoleApplication
         while true
             begin
                 while !result.include?(@prompt)
-        
                     if (Time.now - starttime > timeout)
                         #todo: Killing the entire console is perhaps a little bruteforce
-                        Process.kill(9, @pid) #kill console
-                        @pid, @stdin, @stdout, @stderr = Open4.popen4(@name) #new console
+                        begin
+                            Process.kill(9, @pid) #kill console
+                        rescue Exception => error
+                            begin
+                                system("#{@command_prefix} kill #{@pid}") #kill console in case the command prefix is a nessecity
+                            rescue Exception => error
+                                puts error
+                            end
+                        end
+                        @pid, @stdin, @stdout, @stderr = Open4.popen4("#{@command_prefix} #{@name}") #new console
                         read_until_prompt(TIMEOUT)
-                        puts "SETTING ERROR"
                         @errormessage = "Timeout error: your command took more than #{TIMEOUT}s to complete, killed"
                         return 
                     end
